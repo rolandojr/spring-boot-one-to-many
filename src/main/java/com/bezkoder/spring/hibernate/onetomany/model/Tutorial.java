@@ -1,65 +1,83 @@
 package com.bezkoder.spring.hibernate.onetomany.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tutorials")
 public class Tutorial {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tutorial_generator")
-  private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-  @Column(name = "title")
-  private String title;
+    @Column(name = "title")
+    private String title;
 
-  @Column(name = "description")
-  private String description;
+    @Column(name = "description")
+    private String description;
 
-  @Column(name = "published")
-  private boolean published;
+    @Column(name = "published")
+    private boolean published;
 
-  public Tutorial() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "tutorial_id")
+    private Set<Comment> comments = new HashSet<>();
 
-  }
+    public Tutorial() {
 
-  public Tutorial(String title, String description, boolean published) {
-    this.title = title;
-    this.description = description;
-    this.published = published;
-  }
+    }
 
-  public long getId() {
-    return id;
-  }
+    public Tutorial(String title, String description, boolean published) {
+        this.title = title;
+        this.description = description;
+        this.published = published;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
 
-  public boolean isPublished() {
-    return published;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setPublished(boolean isPublished) {
-    this.published = isPublished;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  @Override
-  public String toString() {
-    return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
-  }
+    public boolean isPublished() {
+        return published;
+    }
 
+    public void setPublished(boolean isPublished) {
+        this.published = isPublished;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public String toString() {
+        return "Tutorial [id=" + id + ", title=" + title + ", desc=" + description + ", published=" + published + "]";
+    }
+
+    public void removeComents() {
+        this.comments.clear();
+    }
 }

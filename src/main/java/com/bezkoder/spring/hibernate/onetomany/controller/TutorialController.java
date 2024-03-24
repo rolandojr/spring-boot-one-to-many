@@ -21,7 +21,7 @@ import com.bezkoder.spring.hibernate.onetomany.exception.ResourceNotFoundExcepti
 import com.bezkoder.spring.hibernate.onetomany.model.Tutorial;
 import com.bezkoder.spring.hibernate.onetomany.repository.TutorialRepository;
 
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class TutorialController {
